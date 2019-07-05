@@ -1,0 +1,20 @@
+一、ubuntu18.04 16.04新建用户
+	1、切换到root权限：sudo su
+	2、新建用户：adduser  xuwenying
+	3、输入新用户密码：*********
+	4、查看用户属性：cat /etc/passwd
+	5、更新权限：打开的是/etc/sudoers文件：
+		     sudo vi /etc/sudoers   在“root ALL=(ALL:ALL) ALL”这一行下面加入一行：xuwenying ALL=(ALL:ALL) ALL  注意在插入模式下进行，最后保存退出。
+
+二、ubuntu18.04  16.04安装插件xrdp
+参考链接https://www.cnblogs.com/hcbin/p/8023756.html
+	1、打开Ubuntu18.04设置里面的screen sharing 并设置密码等
+	2、安装xrdp：          sudo apt-get install xrdp
+	3、安装vnc4server： sudo apt-get install vnc4server
+	4、安装xfce4：         sudo apt-get install xubuntu-desktop  其中当有gdm和lightm的选项时，默认选择gdm3即可
+	5、配置xfce4：        echo "xfce4-session" >~/.xsession       创建.xsession文件并写入内容。
+	6、修改 /etc/xrdp/startwm.sh 文件   sudo gedit /etc/xrdp/startwm.sh  
+	在. /etc/X11/Xsession 上边添加 xfce4-session（本人做这一项发现每次启动远程连接打不开终端命令****16.04必须做*****）
+	7、修改配置文件 /etc/X11/Xsession    在文件最上面添加   xfce4-session   
+	（本人做这一项发现每次启动远程连接打不开终端命令,****16.04必须做*****）
+	8、重新启动xrdp服务   sudo service xrdp restart（看情况是否有必要重新启动一下要连接的ubuntu服务器，建议重启一下服务器更好）
