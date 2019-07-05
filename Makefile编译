@@ -1,0 +1,44 @@
+一、首先，看一下最简单的C文件
+
+//hello.c文件
+#include <stdio.h>
+ 
+void main()
+{
+    printf("hello world\n");
+}
+
+为hello.c编写makefile文件,这里用gcc编译
+创建Makefile文件
+hello:hello.c
+　　gcc -o hello hello.c
+第1行：hello是要生成的文件，hello.c是编译需要的源文件，中间以：分隔
+第2行：是具体的编译命令
+
+二、还可以用gcc先把hello.c编译成机器语言，以.o结尾，最后再将各个文件进行链接生成二进制文件
+   上面的makefile文件则可以写成这样：
+   
+   hello:hello.o
+    gcc -o hello hello.o
+  hello.o:hello.c
+    gcc -c hello.c
+    
+从上面的代码中可以看出，最后编译的hello是由hello.o最后生成的
+先看第3,4行:第3行，hello.c先编译生成hello.o,第4行，是生成hello.o具体的命令
+再看第1,2行：第1行，二进制文件hello需要hello.o,第2行，是生成hello具体的命令
+
+
+三、如果有多个文件需要进行链接，只需生成.o文件，最后链接生成最终文件
+如：有file1.h，file1.c, file2.h, file2.c, main.c五个文件
+makefile文件如下：
+
+main:main.o file1.o file2.o
+    gcc -o main main.o file1.o file2.o
+main.o:main.c file1.h file2.h
+    gcc -c main.c
+file1.o:file1.h file1.c
+    gcc -c file1.c
+file2.o:file2.h file2.c
+    gcc -c file2.c
+    
+    从上面代码可以看出，需要先编译出file1.o,file2.o,main.o文件，最后链接生成最终的main文件。
