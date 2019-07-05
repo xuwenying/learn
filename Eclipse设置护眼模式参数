@@ -1,0 +1,16 @@
+设置参数：
+
+Annotations(注释): 107, 147, 186  浅蓝色
+Deprecated members(不建议使用的成员): 0, 0, 0  
+Fields(字段): 128, 0, 128  紫色
+KeyWord 'return'(关键字'return'): 255, 0, 0   红色
+Keyword excluding 'return'(除了关键字以外的return): 255, 128 ,0  橙色
+Local variable declarations(局部变量声明): 128, 128, 128   灰色
+Method declarations(方法声明): 255, 128, 64    橙色
+Method(方法): 0, 48, 96 暗浅蓝色
+Operators and brackets(运算符与方括号): 255, 128, 0  橙色
+Others(其他): 96 153, 0   深绿色
+Static fields(静态字段): 33, 0, 189  深蓝色
+Static Method invocations(静态方法调用): 77, 166 255  天蓝色 
+Strings(字符串): 132, 26, 238   中天蓝色
+Type variables(类型变量): 128, 0, 25   红罗色
