@@ -141,6 +141,11 @@ ffmpeg -i input.mp4 -ss 00:00:20 -t 10 -r 1 -q:v 2 -f image2 pic-%03d.jpeg
 -t表示共要多少时间。 
 如此，ffmpeg会从input.mp4的第20s时间开始，往下10s，即20~30s这10秒钟之间，每隔1s就抓一帧，总共会抓10帧。
 
+然后，你就随便挑一张，转为YUV: 
+ffmpeg -i pic-001.jpeg -s 1440x1440 -pix_fmt yuv420p xxx3.yuv 
+如果-s参数不写，则输出大小与输入一样。
+
+当然了，YUV还有yuv422p啥的，你在-pix_fmt 换成yuv422p就行啦！
 
 
 
