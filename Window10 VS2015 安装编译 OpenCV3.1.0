@@ -9,3 +9,25 @@ https://opencv.org/releases/page/3/
 将下载后的OpenCV压缩包解压。
 
 配置：打开cmake_gui.exe
+source code 路劲选opencv3.1.0
+build路劲自己新建一个
+configure一下，选vs 14 2015 win64位的进行编译，
+
+中间会出现错误：在编译的过程中ffmpeg，以及ippicv下载失败，然后我们可以手动下载并放到对应的文件夹中即可。
+
+首先我们进入到ffmpeg的下载目录中看
+（1）手动下载ffmpeg
+https://raw.githubusercontent.com/Itseez/opencv_3rdparty/8aeefc4efe3215de89d8c7e114ae6f7a6091b8eb/ffmpeg/opencv_ffmpeg.dll
+https://raw.githubusercontent.com/Itseez/opencv_3rdparty/8aeefc4efe3215de89d8c7e114ae6f7a6091b8eb/ffmpeg/opencv_ffmpeg_64.dll
+将下载来的两个lib文件库拷贝过去即可
+https://raw.githubusercontent.com/Itseez/opencv_3rdparty/8aeefc4efe3215de89d8c7e114ae6f7a6091b8eb/ffmpeg/ffmpeg_version.cmake
+将opencv\sources\3rdparty\ffmpeg\ffmpeg.cmake文件内容用记事本修改为链接所示的内容即可编译通过
+
+
+（2）手动下载ippicv
+https://raw.githubusercontent.com/Itseez/opencv_3rdparty/81a676001ca8075ada498583e4166079e5744668/ippicv/ippicv_windows_20151201.zip
+替换掉原来的0kb文件即可
+
+
+configure通过之后，generate生成对应的opencv.sln,
+vs2015打开对应的opencv.sln即可进行debug,与release.
