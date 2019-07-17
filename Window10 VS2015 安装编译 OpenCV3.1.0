@@ -1,0 +1,11 @@
+Cmake
+Cmake官网，下载对应版本的Cmak
+https://cmake.org/download/
+下载后解压可，打开bin/cmake_gui.exe即可使用cmake.
+
+opencv3.1.0下载
+https://opencv.org/releases/page/3/
+下载对应的OpenCV3.1.0 Sources文件
+将下载后的OpenCV压缩包解压。
+
+配置：打开cmake_gui.exe
