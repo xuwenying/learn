@@ -35,3 +35,21 @@ CMAKE_C_FLAGS：设置 C 编译选项，也可以通过指令 add_definitions() 
 CMAKE_CXX_FLAGS：设置 C++ 编译选项，也可以通过指令 add_definitions() 添加
 
 add_definitions(-DENABLE_DEBUG -DABC) # 参数之间用空格分隔
+
+
+四、项目示例
+1. 简单项目（单个源文件）
+一个经典的 C 程序，如何通过 cmake 来编译呢？
+
+1.1 新建文件 main.c
+
+#include <stdio.h>
+int main() {
+    printf("Hello World!/n");
+    return 0;
+}
+1.2 新建文件 CMakeLists.txt（命名必须是 CMakeLists.txt，注意大小写和不要漏字母）
+
+project(HELLO)
+add_executable(hello main.c)
+
