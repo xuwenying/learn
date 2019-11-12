@@ -1,0 +1,38 @@
+linux系统下，编译生成静态库文件foo.a并在main.c函数中调用链接该静态库
+
+1、首先编写如下文件main.c
+#include <stdio.h>
+#include "foo.h"
+
+int main(void)
+{
+    puts("This is a static library test...");
+    foo();  //调用函数
+    return 0;
+}
+
+2、编写函数库文件foo.c
+ #include <stdio.h> 
+ 
+ void foo(void)
+ {
+     puts("Hello, I'm a Static library");
+ }
+ 
+ 3、编写头文件foo.h
+  #ifndef foo_h__
+ #define foo_h__
+ extern void foo(void);
+ #endif  // foo_h__
+ 
+ 4、编写makefile编译文件
+objects = main.o foo.a    //目标文件需要得到main.o和foo.a
+test : $(objects)        //利用目标文件编译生成linux下./hello的可执行文件
+	cc -o test $(objects)  //链接目标文件以及foo.a库
+foo.a : foo.o             //要生成foo.a库文件需要foo.o文件
+	ar -r foo.a foo.o       //利用foo.o生成foo.a
+foo.o : foo.c foo.h       //要生成foo.o需要foo.c和foo.h
+	cc -c foo.c             //生成foo.o
+main.o: main.c            //要生成main.o文件需要main.c
+	cc -c main.c            //生成main.o 
+ 
