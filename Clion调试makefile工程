@@ -12,3 +12,5 @@
 四、Buil CMakelist项目生成对应的可执行文件
 五、配置configurations  可执行文件，参数，工作目录等。
 最后即可打断点调试。
+
+参考：https://blog.csdn.net/lylwo317/article/details/86673912
