@@ -1,0 +1,14 @@
+一、首先建立一个makefile工程，或者本身拥有一个makefile工程
+二、python下安装compiledb工具，用于解析makefile生成compile_commands.json（这一步其实可以省略）
+   在makefile目录下（conda虚拟环境下可用）compiledb -n make
+三、打开makefile项目，添加Cmakelist
+  cmake_minimum_required(VERSION 3.4.1)
+  project(host_emulation CXX)
+  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_VERBOSE_MAKEFILE 1)
+  add_custom_target(make_host_Cmd
+        COMMAND make TARGET_PLATFORM=PC TARGET_BUILD=debug -j8 （这个命令看情况添加,本例针对TDA4）
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+四、Buil CMakelist项目生成对应的可执行文件
+五、配置configurations  可执行文件，参数，工作目录等。
+最后即可打断点调试。
