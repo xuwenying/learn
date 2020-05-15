@@ -1,0 +1,23 @@
+首先安装对应的 anconda，清华镜像下载比较快https://mirrors.tuna.tsinghua.edu.cn/
+安装网之后，创建虚拟环境：conda create -n xxx python=3.6  
+    （xxx为自己命名的虚拟环境名称，该文件可在Anaconda安装目录 envs文件下找到）
+conda install -n your_env_name [package] 安装需要的package
+激活：
+    Linux:  source activate your_env_name(虚拟环境名称)
+    Windows: activate your_env_name(虚拟环境名称)
+退出：
+    Linux:   source deactivate your_env_name(虚拟环境名称)
+    Windows: deactivate env_name，也可以使用`activate root`切回root环境
+
+conda 出现CondaHTTPError：
+修改.condarc文件（home下快捷键Ctrl+h）
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/mro/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - defaults
+show_channel_urls: true
+    
