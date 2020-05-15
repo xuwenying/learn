@@ -1,0 +1,3 @@
+1、启动终端，sudo apt_get install gnome-tweaks
+2、alt+f2启动窗口，输入gnome-tweaks
+3、弹出优化窗口界面，在windows勾选maximze minimize即可
