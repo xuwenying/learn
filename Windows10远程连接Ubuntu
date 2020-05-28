@@ -18,3 +18,13 @@
 	7、修改配置文件 /etc/X11/Xsession    在文件最上面添加   xfce4-session   
 	（本人做这一项发现每次启动远程连接打不开终端命令,****16.04必须做*****）
 	8、重新启动xrdp服务   sudo service xrdp restart（看情况是否有必要重新启动一下要连接的ubuntu服务器，建议重启一下服务器更好）
+	
+三、删除用户
+
+如果要删除用户，请按下面操作进行，分为3步：
+
+1、执行userdel命令：sudo userdel dongyuanxin_2016150127
+
+2、删除用户目录命令：sudo rm -rf /home/dongyuanxin_2016150127
+
+3、删除用户权限相关配置：删除或者注释掉/etc/sudoers中关于要删除用户的配置，否则无法再次创建同名用户。
