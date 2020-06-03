@@ -2,9 +2,10 @@
     [Desktop Entry]
     Name=Raw Data Capture
     Comment=Start Raw Data Capture
-    Exec=sh /home/xuwenying/test/abc.sh
+    Exec=sh /home/xuwenying/test/abc.sh      //脚本文件
     Terminal=true
     Type=Application
+    Icon=/home/xuwenying/pycharm-community-2017.3.3/bin/pycharm.png   //添加图标
 
 二、新建abc.sh脚本
     #!/bin/bash
