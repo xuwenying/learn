@@ -1,0 +1,15 @@
+一、在桌面添加如下脚本：xxx.desktop
+    [Desktop Entry]
+    Name=Raw Data Capture
+    Comment=Start Raw Data Capture
+    Exec=sh /home/xuwenying/test/abc.sh
+    Terminal=true
+    Type=Application
+
+二、新建abc.sh脚本
+    #!/bin/bash
+    export PATH="/home/xuwenying/anaconda3/bin:$PATH"
+    python /home/xuwenying/work/abc.py
+    
+三、修改权限：
+    sudo chmod +x ./xxx.desktop
