@@ -1,7 +1,7 @@
 一、在桌面添加如下脚本：xxx.desktop
     [Desktop Entry]
-    Name=Raw Data Capture
-    Comment=Start Raw Data Capture
+    Name=Pycharm_Client
+    Comment=Pycharm_Client_1.0
     Exec=sh /home/xuwenying/test/abc.sh      //脚本文件
     Terminal=true
     Type=Application
