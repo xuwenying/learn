@@ -1,2 +1,12 @@
 https://blog.csdn.net/moshanghuakai_pang/article/details/81227794
+显卡驱动：https://www.geforce.cn/drivers
 CUDA下载  https://developer.nvidia.com/cuda-toolkit-archive
+CUDNN下载：https://developer.nvidia.com/rdp/cudnn-archive
+
+
+
+Ubuntu18.04 NvidiaGTX1650 Drive 430.64 cuda 10.0 cudnn 7.5 setting method参考地址
+      https://blog.csdn.net/weixin_43936828/article/details/106550366?%3E
+      
+深度学习环境配置:Ubuntu16.04安装GTX1080Ti+CUDA9.0+cuDNN7.0完整安装教程
+    https://www.cnblogs.com/tanwc/p/9375161.html
