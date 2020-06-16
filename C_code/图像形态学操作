@@ -1,0 +1,107 @@
+本文所述是OpenCV中的morphologyEx函数，由于上板子需求及处理raw数据的原因掉不了opencv函数库，因此写了参考并写如下代码：
+morphologyEx函数利用基本的膨胀和腐蚀技术，来执行更加高级的形态学变换，如开闭运算、形态学梯度、“顶帽”、“黑帽”等等
+本文采用C语言实现以下几个操作：
+1、腐蚀：二值腐蚀基本运算，背景为黑色，目标为白色
+    //二值腐蚀
+    /*函数参数：
+        a——待腐蚀的图像
+        b——腐蚀后的结果
+        mat[5][5]——结构元素，我这里默认设了5*5的大小
+    */
+    void Erode(Mat &a, Mat &b, int mat[5][5])
+    {
+        int i, j, k, o;
+        int rows = a.rows;
+        int cols = a.cols*a.channels();
+
+        bool flag;
+
+        uchar *dst = b.data;
+        uchar *src = a.data;
+        //针对图像中每一个像素位置，判断是否结构元素能填入目标内部
+        for(i = 2; i < rows-2; i++) {
+            for(j = 2; j < cols-2; j++) {
+                //判断结构元素是否可以在当前点填入目标内部，1为可以，0为不可以
+                flag = 1;
+                for(k = -2; k <= 2 && flag; k++) {
+                    for(o = -2; o <= 2; o++) {
+                        //如果当前结构元素位置为1，判断与对应图像上的像素点是否为非0
+                        if(mat[k+2][o+2]) {
+                            //如果图像当前像素为0，则没有击中该点，不是腐蚀的输出
+                            if(!*(src+(i+k)*cols+j+o)){
+                                flag = 0;    break;
+                            }
+                        }
+                    }
+                }
+                *(dst+i*cols+j) = flag ? 255 : 0;
+            }
+        }
+    }
+    
+2、膨胀：二值膨胀基本运算，背景为黑色，目标为白色
+    //二值膨胀
+    /*函数参数：
+        a——待膨胀的图像
+        b——膨胀后的结果
+        mat——结构元素 核
+    */
+    void Dilate(Mat &a, Mat &b, int mat[5][5]) {
+        int i, j, k, o;
+        int rows = a.rows;
+        int cols = a.cols*a.channels();
+        Mat tmp = a.clone();
+        uchar* src = tmp.data;
+        //膨胀是对图像中目标补集的腐蚀，因此先求输入图像数据的补集
+        for(i = 0; i < rows; i++)
+            for(j = 0; j < cols; j++)
+                *(src+i*cols+j) = 255 - *(src+i*cols+j);
+        //膨胀是结构元素的对称集对补集的腐蚀，此处求其反射
+        for(i = 0; i < 5; i++)
+            for(j = 0; j <= i; j++)
+                mat[i][j] = mat[j][i];
+        bool flag;
+        uchar* dst = b.data;
+        //针对图像中每一个像素位置，判断是否结构元素能填入目标内部
+        for(i = 2; i < rows-2; i++) {
+            for(j = 2; j < cols-2; j++) {
+                //判断结构元素是否可以在当前点填入目标内部，1为可以，0为不可以
+                flag = 1;
+                for(k = -2; k <= 2 && flag; k++) {
+                    for(o = -2; o <= 2; o++) {
+                        //如果当前结构元素位置为1，判断与对应图像上的像素点是否为非0
+                        if(mat[k+2][o+2]) {
+                            if(!*(src+(i+k)*cols+j+o)){//没击中
+                                flag = 0;    break;
+                            }
+                        }
+                    }
+                }
+                *(dst+i*cols+j) = flag ? 255 : 0;
+            }
+        }
+        //用结构元素对称集对目标补集腐蚀后，还要对结构再求一次补集，才是膨胀结构输出
+        //赋值结构元素腐蚀漏掉的区域，使原图像恢复为二值图像
+        for(i = 0; i < rows; i++) {
+            for(j = 0; j < cols; j++) {
+                *(dst+i*cols+j) = 255 - *(dst+i*cols+j);
+                if(*(dst+i*cols+j) != 255 && *(dst+i*cols+j) != 0)
+                    *(dst+i*cols+j) = 0;
+            }
+        }
+    }
+    
+3、开运算：开运算 = 先腐蚀运算，再膨胀运算（看上去把细微连在一起的两块目标分开了）
+    void Open_opt(Mat &a, Mat &b, int mat[5][5])
+    {
+        void Erode(a, b, mat[5][5])
+        void Dilate(a, b, mat[5][5]) 
+     }
+    
+4、闭运算：闭运算  = 先膨胀运算，再腐蚀运算（看上去将两个细微连接的图块封闭在一起）
+void Close_opt(Mat &a, Mat &b, int mat[5][5])
+{
+    void Dilate(a, b, mat[5][5]) 
+    void Erode(a, b, mat[5][5])
+    
+ }
