@@ -1,0 +1,274 @@
+#include <stdio.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <math.h>
+
+#define CONNECTIVITY4 4
+#define CONNECTIVITY8 8
+#define STACK_INIT_SIZE 256
+#define STACK_INCRE 256
+#define TRUE 1
+#define FALSE 0
+
+typedef struct tagStack
+{
+    int **base;
+    int **top;
+    int stacksize;
+}Stack;
+
+
+Stack* CreatStack(void)
+{
+    Stack *pStack = (Stack*)calloc(1, sizeof(Stack));
+    pStack->base = (int **)calloc(STACK_INIT_SIZE + 1, sizeof(int *));
+    pStack->top = pStack->base;
+    pStack->stacksize = STACK_INIT_SIZE;
+
+    return pStack;
+}
+
+int IsStackEmpty(Stack *pStack)
+{
+    if (pStack->top == pStack->base)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+void Push(Stack *pStack, int *pnElement)
+{
+    if (pStack->top - pStack->base >= pStack->stacksize)
+        {
+            pStack->base = (int **)realloc(pStack->base, (pStack->stacksize + STACK_INCRE) * sizeof(int *));
+            pStack->top = pStack->base + pStack->stacksize;
+            pStack->stacksize += STACK_INCRE;
+        }
+    ++pStack->top;
+    *(pStack->top) = pnElement;
+}
+
+void Pop(Stack *pStack, int *pnElement)
+{
+    if (pStack->top == pStack->base && *(pStack->top) == NULL)
+        printf("empty！\n");
+    else
+        {
+            memcpy(pnElement, *(pStack->top), 4 * sizeof(int));
+            (pStack->top)--;
+        }
+}
+
+void DestroyStack(Stack *pStack)
+{
+    free(pStack->base);
+    pStack->top = pStack->base = NULL;
+    pStack->stacksize = 0;
+
+    free(pStack), pStack = NULL;
+}
+
+/*
+  connected component labeling
+  pNumLine: the number of connected line in each row
+  LineInfos: the row number;
+  the start column number
+  the end column number
+  labeling number
+*/
+int ConnectedComponentLabeling(uint8_t *pData, int *pResult, int width, int height, int mode, int* pAddress)
+{
+    int i = 0, j = 0, k = 0, m = 0, n = 0, L = 0, R = 0, LL = 0, RR = 0, N = 0, X = 0, nFlag = 0;
+    int widthPadded = width + 1, heightPadded = height + 1;
+    int *pNumLine = NULL, **pLineInfos = NULL, *pTemp = NULL;
+    int *p1, *p3;
+    uint8_t *p2;
+    uint8_t *pnBWPadded;
+    Stack *pStack = NULL;
+
+    if (mode != CONNECTIVITY4 && mode != CONNECTIVITY8){
+        printf("[error]: wrong mode\n");
+        exit(-1);
+    }
+    //
+    pnBWPadded = pData;
+    pNumLine = (int *)malloc(heightPadded * sizeof(int));
+    pLineInfos = (int **)calloc(heightPadded, sizeof(int *));
+    for (i = 0; i < heightPadded; i++){
+        pLineInfos[i] = (int *)(pAddress + i*width * 2);
+    }
+    p1 = pNumLine;
+    p2 = pnBWPadded;
+
+    //calculate each row's connected line, including their row number, starting column number, ending column number
+    for (i = 0; i < height; i++) {
+        n = 0;
+        p3 = pLineInfos[i];
+        for (j = 0; j < widthPadded - 1; j++) {
+            if (*p2 == 1) {
+                k = j;
+                while (*p2 != 0 && k < width) {
+                    p2++;
+                    k++;
+                }
+                *p3++ = i;
+                *p3++ = j;
+                *p3++ = k - 1;
+                *p3++ = 0;
+                n++;
+                j = k;
+            }
+            if(j < widthPadded - 1){
+                p2++;
+            }
+        }
+        *p1++ = n;
+    }
+
+    pStack = CreatStack();
+    N = 1;
+    for (i = 0; i < heightPadded - 1; i++){
+        for (j = 0; j < pNumLine[i]; j++){
+            //
+            if (pLineInfos[i][j * 4 + 3] == 0){
+                pTemp = &pLineInfos[i][j * 4];
+                //*(pStack->top) = pTemp;
+                pTemp[3] = -1;
+                Push(pStack, pTemp);
+            Loop:
+                pTemp = *(pStack->top);
+                X = pTemp[0];
+                L = pTemp[1];
+                R = pTemp[2];
+
+                //connectivity8 or connectivity4
+                LL = (mode == CONNECTIVITY8) ? (L - 1) : L;
+                RR = (mode == CONNECTIVITY8) ? (R + 1) : R;
+
+                nFlag = 0;
+
+                //previous row
+                if (X > 0){
+                    for (m = 0; m < pNumLine[X - 1]; m++){
+                        if (pLineInfos[X - 1][m * 4 + 1] <= RR && pLineInfos[X - 1][m * 4 + 2] >= LL && pLineInfos[X - 1][m * 4 + 3] == 0){
+                            pLineInfos[X - 1][m * 4 + 3] = -1;
+                            Push(pStack, &pLineInfos[X - 1][m * 4]);
+                            nFlag = 1;
+                        }
+                    }
+                }
+                //next row
+                if (X < heightPadded - 1) {
+                    for (n = 0; n < pNumLine[X + 1]; n++){
+                        if (pLineInfos[X + 1][n * 4 + 1] <= RR && pLineInfos[X + 1][n * 4 + 2] >= LL && pLineInfos[X + 1][n * 4 + 3] == 0){
+                            pLineInfos[X + 1][n * 4 + 3] = -1;
+                            Push(pStack, &pLineInfos[X + 1][n * 4]);
+                            nFlag = 1;
+                        }
+                    }
+                }
+
+                //no line connected to current line or current line has been labeled
+                if (nFlag == 0){
+                    if (IsStackEmpty(pStack)){
+                        N++;
+                        continue;
+                    }
+                    else{
+                        (*(pStack->top))[3] = N;
+                        Pop(pStack, pTemp);
+                        if (IsStackEmpty(pStack)){
+                            N++;
+                            continue;
+                        }
+                        else{
+                            goto Loop;
+                        }
+                    }
+                }else{
+                    goto Loop;
+                }
+
+            }
+        }
+    }
+
+    //label result
+    int *label_cnt = malloc(N*sizeof(int));
+    memset(label_cnt,0,N*sizeof(int));
+    for (i = 0; i<height; i++){
+        for (j = 0; j<pNumLine[i]; j++){
+            for (k = pLineInfos[i][j * 4 + 1]; k <= pLineInfos[i][j * 4 + 2]; k++){
+                pResult[i*width + k] = pLineInfos[i][j * 4 + 3];
+                label_cnt[pLineInfos[i][j * 4 + 3]]++;
+            }
+        }
+    }
+    int max_label_cnt = 0;
+    for(i=0;i<N;i++){
+        if(label_cnt[i] > max_label_cnt){
+            max_label_cnt = label_cnt[i];
+        }
+    }
+    free(pNumLine), pNumLine = NULL;
+    free(pLineInfos), pLineInfos = NULL;
+    free(label_cnt);
+    DestroyStack(pStack);
+
+    return max_label_cnt;
+}
+
+
+int main()
+{
+    //binary img
+    uint8_t imgmap[256] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0,
+                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1,
+                            1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0,
+                            1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+                            0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+                            0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                            0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                            0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+                            0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+                            1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                            0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                            0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                            0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+    int *labelmap = (int*)malloc(16*16*sizeof(int));
+    memset(labelmap,0,16*16*sizeof(int));
+    int *pAddress = (int*)malloc(1024*sizeof(int));
+    memset(pAddress,0,1024*sizeof(int));
+    int ind = 0;
+
+    int n=0,m=0;
+
+    for(n=0; n<16; n++){
+        for(m=0; m<16; m++){
+            fprintf(stdout,"%2d,",imgmap[ind]);
+            ind++;
+        }
+        fprintf(stdout,"\n");
+    }
+
+    fprintf(stdout,"\n\n");
+
+    //
+    ind = 0;
+    ConnectedComponentLabeling(imgmap,labelmap,16,16,8,pAddress);
+
+    for(n=0; n<16; n++){
+        for(m=0; m<16; m++){
+            fprintf(stdout,"%3d",labelmap[ind]);
+            ind++;
+        }
+        fprintf(stdout,"\n");
+    }
+
+}
