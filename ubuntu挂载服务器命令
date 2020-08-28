@@ -1,0 +1,1 @@
+sudo mount -t cifs -o username="wenying.xu", password=" ",uid=1000,gid=1000 //10.179.2.20/xxx/xxx/    /disk2/xwy/20/ 
