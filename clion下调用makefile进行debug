@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+bear ./build_all.sh
+生成compiler_commands.json
+
+build_all.sh内容如下：
+#!/bin/bash
+cd  compiler_file;
+make clean;
+make;
+
+最后用clion 2020版本打开即可debug
