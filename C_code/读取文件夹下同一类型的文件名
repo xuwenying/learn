@@ -1,7 +1,34 @@
 #include<dirent.h>
 
-
-
+void getAllFormatFiles(string path, string format, vector<string>& files)
+{
+    DIR*dir;
+    struct dirent *ptr;
+    if((dir = opendir(path.c_str()))==nullptr)
+    {
+        printf("Open dir error ...");
+        exit(1);
+    }
+    
+    while((ptr = readdir(dir))! = nullptr)
+    {
+        if(strcmp(ptr->d_name,".")==0 || strcmp(ptr->d_name,"..")==0 || strcmp(ptr->d_name,format.c_str())==nullptr)
+            continue;
+        else if(ptr->d_type ==8)
+        {
+            string nameAndPath;
+            nameAndPath += ptr->d_name;
+            files.emplace_back(nameAndPath);
+        }
+        else
+        {
+            continue;
+        }
+    }
+    closedir(dir);
+    sort(files.begin(),files.end(),less<string>());
+    
+}
 
 int main()
 {
