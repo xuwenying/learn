@@ -1,0 +1,16 @@
+#include<dirent.h>
+
+
+
+
+int main()
+{
+    char m_imgFileName[256];
+    string m_type = ".png";
+    vector<string> mbinNames;
+    sprintf(m_imgFileName,"%s","/filepath/.....");
+    getAllFormatFiles(m_imgFileName, m_type, mbinNames)
+    
+
+
+}
