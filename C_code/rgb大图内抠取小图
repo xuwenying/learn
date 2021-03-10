@@ -1,0 +1,16 @@
+ 
+pSrcImg              原始图像内存指针  排列方式bgr bgr bgr
+src_img_w,src_img_h  原始图像宽高
+roi_img             抠图存取的内存指针
+int index = 0
+roi_x,roi_y 抠取的起始坐标
+roi_w,roi_h 抠图的宽高
+for(int i = roi_y; i < roi_h+roi_y; ++i)
+{
+    for(int j = roi_x; j < roi_w+roi_x; ++j)
+    {
+        roi_img[index++] = pSrcImg[i*src_img_w*3 + j*3 + 0]   //b 分量
+        roi_img[index++] = pSrcImg[i*src_img_w*3 + j*3 + 1]   //g 分量
+        roi_img[index++] = pSrcImg[i*src_img_w*3 + j*3 + 2]   //r 分量
+    }
+}
