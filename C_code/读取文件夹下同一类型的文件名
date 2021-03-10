@@ -37,7 +37,8 @@ int main()
     vector<string> mbinNames;
     sprintf(m_imgFileName,"%s","/filepath/.....");
     getAllFormatFiles(m_imgFileName, m_type, mbinNames)
-    
+    int count = mbinNames.size();  //统计文件夹下.png类型文件数量
+    mbinNames[0].c_str()  //第一张图片的名字
 
 
 }
