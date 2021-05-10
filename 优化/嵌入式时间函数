@@ -1,0 +1,7 @@
+include<sys/time.h>
+struct timeval t1,t2;
+gettimeofday(&t1,NULL);
+run()函数实现
+gettimeofday(&t2,NULL);
+float used_time = ((float32_t)(t2.tv_sec-t1.tv_sec)*1000000+(float32_t)(t2.tv_usec-t1.tv_usec)/1000.0);
+printf("run() 函数用时%f\n",used_time);
