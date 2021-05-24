@@ -1,0 +1,9 @@
+ 1MAC = 2OPS
+ 1MAC 是一次乘加计算
+ 
+ n*c*h*w
+ 例如一张图像1*3*768*1280
+ input : 1*3*768*1280
+ conv1 : kernel 3*3 、 stride 2 、 outchannelnum 16 、 pad 1 、 group 1 、 bn 1 、 out_h 384、 out_w 640
+ 
+ MAC = (in_channel * out_channel * kernel_h * kernel_w)/group  *
