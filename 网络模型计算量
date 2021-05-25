@@ -12,5 +12,6 @@
 如果网络测试耗时：t ms
 
 那么 效率MACs = GMACs/t *1000  GMACs/s
-     效率tops = 效率MACs/1000 * 芯片算力
+     效率tops = 效率MACs/1000
+     利用率 = 效率TOPs/芯片算力
  
