@@ -3,7 +3,14 @@
  
  n*c*h*w
  例如一张图像1*3*768*1280
- input : 1*3*768*1280
+ input : 1*3*768*1280  n * in_channel * in_w * in_h  
  conv1 : kernel 3*3 、 stride 2 、 outchannelnum 16 、 pad 1 、 group 1 、 bn 1 、 out_h 384、 out_w 640
  
- MAC = (in_channel * out_channel * kernel_h * kernel_w)/group  *
+ MACs = (in_channel * out_channel * kernel_h * kernel_w)/group  * in_w * in_h * out_w * out_h    
+ GMACs = MACs/1024/1024/1024
+ 
+如果网络测试耗时：t ms
+
+那么 效率MACs = GMACs/t *1000  GMACs/s
+     效率tops = 效率MACs/1000 * 芯片算力
+ 
