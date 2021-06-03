@@ -1,0 +1,12 @@
+project（xxxlib）
+
+set(CMAKE_C_COMPILER "c编译器")
+set(CMAKE_CXX_COMPILER "c++编译器")
+
+include_directories(头文件路径)
+
+set(lib_src, 需要编译的.c .h文件)
+
+ADD_LIBRARY(lib名称，${lib_src})
+
+#ADD_EXECUTABLE(lib名称,main.cpp)   编译可执行文件
