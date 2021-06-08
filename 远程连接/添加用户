@@ -1,0 +1,7 @@
+1) 切换为root用户为了获取创建用户的权限
+xuwenying@ubuntu:~$ sudo su
+2) 添加一个新用户（如用户名为csdn）
+root@ubuntu:/home/xuwenying# useradd csdn
+3) 为该用户设定登录密码
+root@ubuntu:/home/xuwenying# passwd csdn
+(4)打开的是/etc/sudoers文件，修改该文件，在“root ALL=(ALL:ALL) ALL”这一行下面加入一行：
