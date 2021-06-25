@@ -1,0 +1,15 @@
+sudo docker run -it --name plat_qualcomm -v /home/xwy/develop/qualcomm_work/:/home/plat_qualcomm --gpus all --shm-size=8g ubuntu  /bin/bash
+
+sudo docker images
+
+sudo docker ps -a
+
+sudo docker stop plat_qualcomm
+
+sudo docker rm plat_qualcomm
+
+sudo docker restart plat_qualcomm
+
+sudo docker exec -it  plat_qualcomm  /bin/bash
+
+sudo docker commit plat_qualcomm  xwy_qual:run
