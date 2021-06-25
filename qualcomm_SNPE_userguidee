@@ -1,0 +1,73 @@
+qualcomm_SNPE is Snapdragon Neural Processing Engine SDK
+
+downloads link: https://developer.qualcomm.com/download/software
+chose: Neural Processing SDK for AI   
+link: https://developer.qualcomm.com/software/qualcomm-neural-processing-sdk/tools
+
+docker images
+Anaconda3
+snpe-1.51.0.zip
+
+
+yi\Setup SDK Environment and Dependencies
+
+1\ unzip -X snpe-X.Y.Z.zip
+
+2\source snpe-X.Y.Z/bin/dependencies.sh
+
+3\source snpe-X.Y.Z/bin/check_python_depends.sh
+
+er\Setup Environment
+
+export ANDROID_NDK_ROOT=<path_to_ndk>
+
+Environment setup for ONNX: 
+      1\ cd snpe-X.Y.Z
+      2\ mkdir onnx      -->$ONNX_DIR
+      3\ source bin/envsetup.sh -o $ONNX_DIR
+
+
+Running a ONNX Model with SNPE SDK  (pc emulation)
+  1\ install onnx:   pip install onnx
+  2\ set up ONNX environment :  cd $SNPE_ROOT
+                                source bin/envsetup.sh -o $ONNX_DIR
+                                where $ONNX_DIR is the path to the ONNX installation.
+  3\ Download the VGG pretrained model: cd $SNPE_ROOT/models/VGG
+                                        wget https://s3.amazonaws.com/onnx-model-zoo/vgg/vgg16/vgg16.onnx   
+                                        
+  4\ Download a sample image, and the label file for the model:  cd $SNPE_ROOT/models/VGG/data
+                                                                 wget https://s3.amazonaws.com/model-server/inputs/kitten.jpg
+                                                                 wget https://s3.amazonaws.com/onnx-model-zoo/synset.txt
+  
+  5\ Preprocess the image and convert it into a raw file.
+    (1)Resize to 256x256
+    (2)Take center crop of 224x224
+    (3)Normalize
+    (4)Save as a raw file
+        cd $SNPE_ROOT/models/VGG/data   mkdir cropped
+        cd $SNPE_ROOT/models/VGG/
+        python scripts/create_VGG_raws.py -i data/ -d data/cropped/  
+        
+  6\ Convert the ONNX model into SNPE DLC format: 
+        cd $SNPE_ROOT/models/VGG  mkdir dlc
+        snpe-onnx-to-dlc -i ./vgg16.onnx -o dlc/vgg16.dlc
+       
+  7\  View your DLC model:
+        snpe-dlc-info Execute snpe-dlc-info -i dlc/vgg16.dlc 
+  8\ Run inference: snpe-net-run loads a DLC file 
+        cd $SNPE_ROOT/models/VGG/data 
+        touch raw_list.txt ------>vim write  ./cropped/kitten.raw
+        snpe-net-run --input_list raw_list.txt --container ../dlc/vgg16.dlc --output_dir ../output
+        
+  9\ Postprocess the result for prediction 
+        cd $SNPE_ROOT/models/VGG/
+        python scripts/show_vgg_classifications.py -i data/raw_list.txt -o output/ -l data/synset.txt
+   results is ::
+               Classification results
+                probability=0.351833 ; class=n02123045 tabby, tabby cat
+                probability=0.315166 ; class=n02123159 tiger cat
+                probability=0.313086 ; class=n02124075 Egyptian cat
+                probability=0.012995 ; class=n02127052 lynx, catamount
+    probability=0.003528 ; class=n02129604 tiger, Panthera tigris     
+   
+     
