@@ -8,7 +8,7 @@
     cd tensorflow 
     wget https://storage.googleapis.com/download.tensorflow.org/models/inception_v3_2016_08_28_frozen.pb.tar.gz
     
-6、tar -xzf inception_v3_2016_08_28_frozen.pb.tar.gz
+6、解压模型 tar -xzf inception_v3_2016_08_28_frozen.pb.tar.gz
 
 7、准备用于测试的数据集并转换为raw数据 cp alexnet/data --->inception_v3/data
     cd $SNPE_ROOT/models/inception_v3/data   mkdir cropped
@@ -21,11 +21,11 @@
         snpe-tensorflow-to-dlc -i tensorflow/inception_v3_2016_08_28_frozen.pb --input_dim input  1,299,299,3
            --out_node InceptionV3/Predictions/Reshape_1 -o dlc/inception_v3.dlc        
 
-9、snpe-dlc-quantize --input_dlc dlc/inception_v3.dlc --input_list data/cropped/raw_list.txt  --output_dlc quant_dlc/inception_v3_quantized.dlc
+9、模型量化 snpe-dlc-quantize --input_dlc dlc/inception_v3.dlc --input_list data/cropped/raw_list.txt  --output_dlc quant_dlc/inception_v3_quantized.dlc
 
-10、snpe-net-run --container dlc/inception_v3_quantized.dlc --input_list data/cropped/raw_list.txt
+10、模型前向验证 snpe-net-run --container dlc/inception_v3_quantized.dlc --input_list data/cropped/raw_list.txt
 
-11、python scripts/show_inceptionv3_classifications.py -i data/cropped/raw_list.txt -o output/ -l data/imagenet_slim_labels.txt
+11、模型分类结果展示：python scripts/show_inceptionv3_classifications.py -i data/cropped/raw_list.txt -o output/ -l data/imagenet_slim_labels.txt
 
 
   
