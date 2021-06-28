@@ -23,5 +23,9 @@
 
 9、snpe-dlc-quantize --input_dlc dlc/inception_v3.dlc --input_list data/cropped/raw_list.txt  --output_dlc quant_dlc/inception_v3_quantized.dlc
 
+10、snpe-net-run --container dlc/inception_v3_quantized.dlc --input_list data/cropped/raw_list.txt
+
+11、python scripts/show_inceptionv3_classifications.py -i data/cropped/raw_list.txt -o output/ -l data/imagenet_slim_labels.txt
+
 
   
