@@ -1,0 +1,22 @@
+Building the C++ Application
+Building and Running on x86 Linux and Embedded Linux
+
+    Target 	                          Makefile 	                  Possible CXX value 	      Output Location
+aarch64-linux (gcc 4.9) 	   Makefile.aarch64-linux-gcc4.9 	    aarch64-linux-gnu-g++ 	  aarch64-linux-gcc4.9
+arm-linux (gcc 4.9sf) 	     Makefile.arm-linux-gcc4.9sf    	  arm-linux-gnueabi-g++ 	  arm-linux-gcc4.9sf
+arm-oe-linux (gcc 6.4hf) 	   Makefile.arm-oe-linux-gcc6.4hf 	  arm-oe-linux-g++ 	        arm-oe-linux-gcc6.4hf
+aarch64-oe-linux (gcc 6.4) 	 Makefile.aarch64-oe-linux-gcc6.4 	aarch64-oe-linux-g++ 	    aarch64-oe-linux-gcc6.4
+x86_64-linux 	               Makefile.x86_64-linux-clang 	          g++ 	                x86_64-linux-clang 
+
+1\compile the source 
+   cd $SNPE_ROOT/examples/NativeCpp/SampleCode
+    export CXX=<Name of c++ cross compiler>      export   CXX=g++  
+    make -f <Makefile for the target>            make -f  Makefile.x86_64-linux-clang
+    
+2\run inception_v3 convered model     
+    /home/plat_qualcomm/snpe-1.51.0.2663/examples/NativeCpp/SampleCode/obj/local/x86_64-linux-clang/snpe-sample -d ../dlc/inception_v3.dlc -i target_raw_list.txt -o output
+
+3\ generate the classifiscation results
+  python /home/plat_qualcomm/snpe-1.51.0.2663/models/inception_v3/scripts/show_inceptionv3_classifications.py  -i target_raw_list.txt -o output/ -l imagenet_slim_labels.txt    
+    
+    
