@@ -1,0 +1,20 @@
+1: Package Generation:
+    export SNPE_UDO_ROOT=$SNPE_ROOT/share/SnpeUdo
+    snpe-udo-package-generator -p $SNPE_ROOT/examples/NativeCpp/UdoExample/Softmax/config/Softmax.json -o $SNPE_ROOT/models/inception_v3/
+    
+2: Framework model Conversion to a DLC:
+    snpe-tensorflow-to-dlc --input_network <INCEPTION_V3_PATH>/inception_v3_2016_08_28_frozen.pb --input_dim 'input' 1,299,299,3 --out_node InceptionV3/Predictions/Reshape_1 --output_path $SNPE_ROOT/models/inception_v3/dlc/inception_v3_udo.dlc --udo $SNPE_ROOT/examples/NativeCpp/UdoExample/Softmax/config/Softmax.json
+
+3: Package Implementations:
+    (1)CPU Implementations (Android and x86)
+        cp -f $SNPE_ROOT/examples/NativeCpp/UdoExample/Softmax/src/CPU/SoftmaxImplLibCpu.cpp $SNPE_ROOT/models/inception_v3/SoftmaxUdoPackage/jni/src/CPU/
+        cp -f $SNPE_ROOT/examples/NativeCpp/UdoExample/Softmax/src/reg/SoftmaxUdoPackageCpuImplValidationFunctions.cpp $SNPE_ROOT/models/inception_v3/SoftmaxUdoPackage/jni/src/reg/
+
+4:Setup Script
+    python3 $SNPE_ROOT/models/inception_v3/scripts/setup_inceptionv3.py -a ~/download_model_dir -d -u -r <runtime_of_choice> ----->cpu /gpu /dsp  and so on  
+    
+5: Package Compilation
+    cd $SNPE_ROOT/models/inception_v3
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SNPE_ROOT/models/inception_v3/SoftmaxUdoPackage/libs/x86/
+    snpe-net-run --container dlc/inception_v3_udo.dlc --input_list data/cropped/raw_list.txt --udo_package_path SoftmaxUdoPackage/libs/x86/libUdoSoftmaxUdoPackageReg.so
+
