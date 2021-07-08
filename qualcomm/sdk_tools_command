@@ -1,0 +1,28 @@
+
+    snpe-net-run:
+    
+    snpe_bench.py
+    
+    snpe-caffe-to-dlc
+    
+    snpe-caffe2-to-dlc
+    
+    snpe-diagview
+    
+    snpe-dlc-info
+    
+    snpe-dlc-diff
+    
+    snpe-dlc-viewer: Save HTML file to Specify a file name tmp
+        mkdir tmp
+        snpe-dlc-viewer -i dlc/inception_v3.dlc -s ./tmp 
+        
+       
+    snpe-dlc-quantize
+    snpe-tensorflow-to-dlc
+    snpe-tflite-to-dlc
+    snpe-onnx-to-dlc
+    snpe-platform-validator
+    snpe-platform-validator-py
+    snpe-throughput-net-run
+    snpe-udo-package-generator
