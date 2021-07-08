@@ -1,6 +1,7 @@
 
     snpe-net-run:
-    
+         snpe-net-run --container dlc/inception_v3_quantized.dlc --input_list data/cropped/raw_list.txt
+        
     snpe_bench.py
     
     snpe-caffe-to-dlc
@@ -9,7 +10,9 @@
     
     snpe-diagview
     
-    snpe-dlc-info
+    snpe-dlc-info:
+         mkdir tmp
+         snpe-dlc-info -i dlc/inception_v3_3.dlc -s /home/plat_qualcomm/snpe-1.51.0.2663/models/inception_v3/tmp/3.csv
     
     snpe-dlc-diff
     
@@ -18,10 +21,18 @@
         snpe-dlc-viewer -i dlc/inception_v3.dlc -s ./tmp 
         
        
-    snpe-dlc-quantize
-    snpe-tensorflow-to-dlc
+    snpe-dlc-quantize:
+        snpe-dlc-quantize --input_dlc dlc/inception_v3.dlc --input_list data/cropped/raw_list.txt  --output_dlc quant_dlc/inception_v3_quantized.dlc
+        
+    snpe-tensorflow-to-dlc:
+        snpe-tensorflow-to-dlc --input_network tensorflow/inception_v3_2016_08_28_frozen.pb --input_dim 'input' 1,299,299,3 --out_node InceptionV3/Logits/AvgPool_1a_8x8/AvgPool  --output_path /home/plat_qualcomm/snpe-1.51.0.2663/models/inception_v3/dlc/inception_v3_4.dlc
+    
+    
     snpe-tflite-to-dlc
-    snpe-onnx-to-dlc
+    
+    snpe-onnx-to-dlc:
+        snpe-onnx-to-dlc -i ./vgg16.onnx -o dlc/vgg16.dlc
+    
     snpe-platform-validator
     snpe-platform-validator-py
     snpe-throughput-net-run
