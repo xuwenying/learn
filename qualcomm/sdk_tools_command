@@ -33,7 +33,11 @@
     snpe-onnx-to-dlc:
         snpe-onnx-to-dlc -i ./vgg16.onnx -o dlc/vgg16.dlc
     
-    snpe-platform-validator
-    snpe-platform-validator-py
-    snpe-throughput-net-run
-    snpe-udo-package-generator
+    snpe-platform-validator:
+    
+    snpe-platform-validator-py:
+    
+    snpe-throughput-net-run:
+    
+    snpe-udo-package-generator:
+        snpe-udo-package-generator -p $SNPE_ROOT/examples/NativeCpp/UdoExample/Softmax/config/Softmax.json -o $SNPE_ROOT/models/inception_v3/
