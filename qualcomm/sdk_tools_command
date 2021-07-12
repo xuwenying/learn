@@ -1,36 +1,36 @@
 
-    snpe-net-run:
+    snpe-net-run:   dlc模型前向测试
          snpe-net-run --container dlc/inception_v3_quantized.dlc --input_list data/cropped/raw_list.txt
         
     snpe_bench.py
     
-    snpe-caffe-to-dlc
+    snpe-caffe-to-dlc： caffe模型转dlc模型
     
-    snpe-caffe2-to-dlc
+    snpe-caffe2-to-dlc caffe2模型转dlc模型
     
     snpe-diagview
     
-    snpe-dlc-info:
+    snpe-dlc-info: dlc模型查看，-s 保存成csv文件
          mkdir tmp
          snpe-dlc-info -i dlc/inception_v3_3.dlc -s /home/plat_qualcomm/snpe-1.51.0.2663/models/inception_v3/tmp/3.csv
     
     snpe-dlc-diff
     
-    snpe-dlc-viewer: Save HTML file to Specify a file name tmp
+    snpe-dlc-viewer: Save HTML file to Specify a file name tmp 查看dlc文件，保存html文件
         mkdir tmp
         snpe-dlc-viewer -i dlc/inception_v3.dlc -s ./tmp 
         
        
-    snpe-dlc-quantize:
+    snpe-dlc-quantize: 量化dlc模型（dsp 8bit）
         snpe-dlc-quantize --input_dlc dlc/inception_v3.dlc --input_list data/cropped/raw_list.txt  --output_dlc quant_dlc/inception_v3_quantized.dlc
         
-    snpe-tensorflow-to-dlc:
+    snpe-tensorflow-to-dlc:  tensorflow模型转dlc模型
         snpe-tensorflow-to-dlc --input_network tensorflow/inception_v3_2016_08_28_frozen.pb --input_dim 'input' 1,299,299,3 --out_node InceptionV3/Logits/AvgPool_1a_8x8/AvgPool  --output_path /home/plat_qualcomm/snpe-1.51.0.2663/models/inception_v3/dlc/inception_v3_4.dlc
     
     
-    snpe-tflite-to-dlc
+    snpe-tflite-to-dlc:  tflite模型转dlc模型
     
-    snpe-onnx-to-dlc:
+    snpe-onnx-to-dlc:  onnx模型转dlc模型
         snpe-onnx-to-dlc -i ./vgg16.onnx -o dlc/vgg16.dlc
     
     snpe-platform-validator:
@@ -39,5 +39,5 @@
     
     snpe-throughput-net-run:
     
-    snpe-udo-package-generator:
+    snpe-udo-package-generator: 生成udo模块（用户自定义模块）
         snpe-udo-package-generator -p $SNPE_ROOT/examples/NativeCpp/UdoExample/Softmax/config/Softmax.json -o $SNPE_ROOT/models/inception_v3/
