@@ -1,0 +1,15 @@
+1、$ cd ~/catkin_ws/src 
+  $ . ~/catkin_ws/devel/setup.bash
+  
+2、创建软件包: $ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+创建一个名为beginner_tutorials的新软件包，这个软件包依赖于std_msgs、roscpp和rospy
+
+3、构建一个catkin工作区并生效配置文件 
+    $ cd ~/catkin_ws
+    $ catkin_make
+
+4、roscore是你在运行所有ROS程序前首先要运行的命令
+  $ roscore
+  
+5、使用rosrun，打开一个新终端:
+  $ rosrun turtlesim turtlesim_node
