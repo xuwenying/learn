@@ -1,0 +1,22 @@
+1、下载robosence驱动    https://github.com/RoboSense-LiDAR/rslidar_sdk/releases
+参考 https://github.com/RoboSense-LiDAR/rslidar_sdk/blob/release/README_CN.md
+
+2、安装必须依赖包：
+    yalm :   sudo apt-get update
+             sudo apt-get install -y libyaml-cpp-dev
+             
+    pcap:    sudo apt-get install -y  libpcap-dev
+    
+3、ROS包搭建：
+    1、打开工程内的CMakeLists.txt文件，将文件顶部的set(COMPILE_METHOD ORIGINAL)改为set(COMPILE_METHOD CATKIN)    
+            set(COMPILE_METHOD CATKIN)
+    2、将rslidar_sdk工程目录下的package_ros1.xml文件重命名为package.xml
+    3、将rslidar_sdk工程放入src文件夹内
+    4、返回工作空间目录、执行以下命令即可编译&运行
+        catkin_make
+        source devel/setup.bash
+        roslaunch rslidar_sdk start.launch
+        
+ 4、在执行命令后查看是否收到雷达信息，如果未收到请检查配置文件是否有问题；
+    
+    注意初次使用必须先配置电脑端ip网络：
