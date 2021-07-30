@@ -1,0 +1,19 @@
+1、查看usb设备
+    lsusb
+    
+2、插入usb摄像头
+   ls /dev/video*
+   
+3、查看查看USB设备的详细信息：
+    udevadm info -a /dev/video0
+    udevadm info -a /dev/video1
+    
+4、比对信息，根据关键信息，不同的USB独特信息进行规则建立
+   cd /etc/udev/rules.d/
+   新建文件规则 touch my_usb_rules.rules
+   sudo gedit my_usb_rules.rules
+   ACTION==”add”, KERNEL=="ttyUSB*", SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0777", SYMLINK+="cam0"
+   
+5、插入设备usb,查看是否更改cam0
+  ll | grep cam
+    
