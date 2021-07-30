@@ -15,5 +15,6 @@
    ACTION==”add”, KERNEL=="ttyUSB*", SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE="0777", SYMLINK+="cam0"
    
 5、插入设备usb,查看是否更改cam0
-  ll | grep cam
+    cd  /dev 
+    ll | grep cam
     
