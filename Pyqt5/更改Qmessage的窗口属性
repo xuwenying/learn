@@ -1,1 +1,11 @@
 Qmessage使用默认是不变的，如果要更改窗口大小和属性，可以通过setStyleSheet（）来进行设置
+
+    box = QMessageBox(QMessageBox.Information,'tuichu','queding tuichu?')
+    yes = box.addButton('queding',QMessageBox.YesRole)
+    no = box.addButton('quxiao',QMessageBox.NoRole)
+    box.setStyleSheet("QLabel{min-width:120px; min-height:60px;}")
+    yes.setStyleSheet("QPushButton{min-width:80px; min-height:50px;}")
+    no.setStyleSheet("QPushButton{min-width:80px; min-height:50px;}")
+    box.exec()
+
+    QMessageBox.information(None,'picture choose','please choose image', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
