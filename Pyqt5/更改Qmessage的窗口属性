@@ -1,0 +1,1 @@
+Qmessage使用默认是不变的，如果要更改窗口大小和属性，可以通过setStyleSheet（）来进行设置
