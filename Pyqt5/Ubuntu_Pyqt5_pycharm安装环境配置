@@ -1,0 +1,29 @@
+1、库安装
+    sudo apt-get install pyqt5-dev-tools
+    pip install pyqt5
+    
+2、配置pycharm
+    1）在pycharm的file任务栏 - > setting -> Tools -> External Tools
+    2）在上图右侧点击加号 “+”
+    3）点击加号后出现
+    一、添加QT pyUIC
+      在Name：填写名字pyUIC （用于将ui文件转换为py文件）
+      在Group：填写QT，可选别的名字
+      Program：选择python所在位置，可在命令行用which python3.5查看。(自己用的是3.5版本)
+      Arguments：填写-m PyQt5.uic.pyuic $FileName$ -o $FileNameWithoutExtension$.py
+      working directory: Working direction
+      
+    二、添加QT designer
+      在Name：填写名字QTdesigner（用于将ui文件转换为py文件）
+      在Group：填写Qt，可选别的名字
+      Program：选择designer所在位置，可在命令行用which designer查看。
+      Arguments：填写$FileName$
+      working directory: $ProjectFileDir$
+      
+3、使用
+    在pycharm中的Tools任务栏 - > Qt -> QTdesigner（打开qt编辑界面）
+    选择一个ui文件打开
+    编辑，点击保存。
+    生成一个ui文件。
+    右键ui文件，选择QT - > pyUIC
+    将ui文件生成py文件
