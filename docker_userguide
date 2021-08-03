@@ -21,3 +21,6 @@ sudo docker commit plat_qualcomm  xwy_qual:run  #提交当前名为plat_qualcomm
 
 docker 出现/var/run/docker.sock: permission denied 
 解决办法： chmod a+rw /var/run/docker.sock
+
+docker 出现 mkdir /vsch/ser   
+解决办法，给vsch赋权限即可： chmod 777 -R vsch
