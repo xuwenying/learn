@@ -1,24 +1,24 @@
 获取摄像头参数 capture.set(0）
 
-0. CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds.
-1. CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.
-2. CV_CAP_PROP_POS_AVI_RATIO Relative position of the video file
-3. CV_CAP_PROP_FRAME_WIDTH Width of the frames in the video stream.   
-4. CV_CAP_PROP_FRAME_HEIGHT Height of the frames in the video stream.
-5. CV_CAP_PROP_FPS Frame rate.
-6. CV_CAP_PROP_FOURCC 4-character code of codec.
-7. CV_CAP_PROP_FRAME_COUNT Number of frames in the video file.
-8. CV_CAP_PROP_FORMAT Format of the Mat objects returned by retrieve() .
-9. CV_CAP_PROP_MODE Backend-specific value indicating the current capture mode.
-10. CV_CAP_PROP_BRIGHTNESS Brightness of the image (only for cameras).
-11. CV_CAP_PROP_CONTRAST Contrast of the image (only for cameras).
-12. CV_CAP_PROP_SATURATION Saturation of the image (only for cameras).
-13. CV_CAP_PROP_HUE Hue of the image (only for cameras).
-14. CV_CAP_PROP_GAIN Gain of the image (only for cameras).
-15. CV_CAP_PROP_EXPOSURE Exposure (only for cameras).
-16. CV_CAP_PROP_CONVERT_RGB Boolean flags indicating whether images should be converted to RGB.
-17. CV_CAP_PROP_WHITE_BALANCE Currently unsupported
-18. CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
+0. CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds.  //视频目前位置，为毫秒数或者视频获取时间戳
+1. CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.    //将被下一步解压/获取的帧索引，以0为起点
+2. CV_CAP_PROP_POS_AVI_RATIO Relative position of the video file    // 视频文件的相对位置（0 - 影片的开始，1 - 影片的结尾)
+3. CV_CAP_PROP_FRAME_WIDTH Width of the frames in the video stream.     //视频流中的帧宽度  
+4. CV_CAP_PROP_FRAME_HEIGHT Height of the frames in the video stream.   //视频流中的帧高度
+5. CV_CAP_PROP_FPS Frame rate.     //视频帧率 帧/秒
+6. CV_CAP_PROP_FOURCC 4-character code of codec.     //表示codec的四个字符
+7. CV_CAP_PROP_FRAME_COUNT Number of frames in the video file.  //视频总帧数
+8. CV_CAP_PROP_FORMAT Format of the Mat objects returned by retrieve() .  //视频格式
+9. CV_CAP_PROP_MODE Backend-specific value indicating the current capture mode.     //后端特定值，指示当前捕获模式
+10. CV_CAP_PROP_BRIGHTNESS Brightness of the image (only for cameras).   //亮度 
+11. CV_CAP_PROP_CONTRAST Contrast of the image (only for cameras).      //对比度 
+12. CV_CAP_PROP_SATURATION Saturation of the image (only for cameras).  //饱和度 50
+13. CV_CAP_PROP_HUE Hue of the image (only for cameras).          //色调 50
+14. CV_CAP_PROP_GAIN Gain of the image (only for cameras).     //增益
+15. CV_CAP_PROP_EXPOSURE Exposure (only for cameras).    //曝光 50
+16. CV_CAP_PROP_CONVERT_RGB Boolean flags indicating whether images should be converted to RGB.   //布尔型标记图像是否应该被转换为RGB.
+17. CV_CAP_PROP_WHITE_BALANCE Currently unsupported   //白平衡
+18. CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)   //立体声摄像机校正标志(注意:仅支持DC1394 v2。x端cur-rently)
 
 设置摄像头参数
 capture.set(CV_CAP_PROP_FRAME_WIDTH, 1080);//宽度 
