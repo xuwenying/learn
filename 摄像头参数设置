@@ -1,4 +1,4 @@
-获取摄像头参数
+获取摄像头参数 capture.set(0）
 
 0. CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds.
 1. CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.
@@ -20,7 +20,7 @@
 17. CV_CAP_PROP_WHITE_BALANCE Currently unsupported
 18. CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
 
-
+设置摄像头参数
 capture.set(CV_CAP_PROP_FRAME_WIDTH, 1080);//宽度 
 capture.set(CV_CAP_PROP_FRAME_HEIGHT, 960);//高度
 capture.set(CV_CAP_PROP_FPS, 30);//帧率 帧/秒
