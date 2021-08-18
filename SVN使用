@@ -1,0 +1,12 @@
+安装rapidsvn
+sudo apt-get install rapidsvn
+打开terminal   rapidsvn
+
+download:
+
+1、选择repository 选择check out 
+2、输入url 和本地存放地址；
+
+commit
+1、拷贝需要的commit的文件到目标文件夹下，进行add
+2、 add之后commit一下，注意commit的信息要多写一些，太少可能会出错
