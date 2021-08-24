@@ -1,0 +1,9 @@
+一、配置添加python路径（解决rospy问题）：
+    1、File->Settings->Project Interpreter->右边小齿轮Show All->选中正在使用的python
+    2、点击右边最下面的图标，打开Interpreter Path
+    3、添加/opt/ros/indigo/lib/python2.7/dist-packages
+    4、OK
+    
+二、会出现”ImportError: No module named rospkg“问题
+    直接在环境中安装 pip install rospkg 
+    即可在pycharm中跑通
