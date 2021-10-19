@@ -5,3 +5,12 @@ root@ubuntu:/home/xuwenying# useradd csdn
 3) 为该用户设定登录密码
 root@ubuntu:/home/xuwenying# passwd csdn
 (4)打开的是/etc/sudoers文件，修改该文件，在“root ALL=(ALL:ALL) ALL”这一行下面加入一行：
+
+
+
+
+远程连接ssh注销用户：
+1、ssh usrname@ip 后，输入密码验证
+2、who 查看用户
+3、pkill -kill -t pts/2  或者 skill -kill -v pts/2  或者 sudo skill -kill -u usrname
+
