@@ -1,0 +1,6 @@
+安装如下依赖包：
+  sudo apt-get install ros-melodic-image-view 
+  sudo apt-get install mjpegtools
+执行
+  rosrun image_view extract_images _sec_per_frame:=0.1 image:=后面是rostopic
+按照一定的频率解析出 图片
