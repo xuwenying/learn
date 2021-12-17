@@ -11,6 +11,12 @@
 法二：
     写python代码
     import rosbag
+    import cv2
+    from cv_bridge import CvBridge, CvBridgeError
+    import sensor_msgs.point_cloud2 as pc2
+    from sensor_msgs.msg import Image
+    import numpy as np
+    import pandas as pd
     with rosbag.Bag(f,'r') as bag:
         for topic,msg,t in bag.read_messages():
             print(topic, t, len(msg.data))
