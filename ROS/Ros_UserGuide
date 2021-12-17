@@ -1,7 +1,9 @@
-1、$ cd ~/catkin_ws/src 
-  $ . ~/catkin_ws/devel/setup.bash
+1、$ mkdir -p /catkin_ws/src 
+   $ cd ~/catkin_ws/src 
+   $ . ~/catkin_ws/devel/setup.bash
   
-2、创建软件包: $ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+2、创建软件包: 
+   $ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
 创建一个名为beginner_tutorials的新软件包，这个软件包依赖于std_msgs、roscpp和rospy
 
 3、构建一个catkin工作区并生效配置文件 
