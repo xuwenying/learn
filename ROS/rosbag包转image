@@ -1,6 +1,37 @@
-安装如下依赖包：
-  sudo apt-get install ros-melodic-image-view 
-  sudo apt-get install mjpegtools
-执行
-  rosrun image_view extract_images _sec_per_frame:=0.1 image:=后面是rostopic
-按照一定的频率解析出 图片
+对于录制好的bag包可以采用如下两个方法进行解析：
+法一：
+      安装如下依赖包：
+        sudo apt-get install ros-melodic-image-view 
+        sudo apt-get install mjpegtools
+      执行
+        rosrun image_view extract_images _sec_per_frame:=0.1 image:=后面是rostopic
+      按照一定的频率解析出 图片
+      
+      
+法二：
+    写python代码
+    import rosbag
+    with rosbag.Bag(f,'r') as bag:
+        for topic,msg,t in bag.read_messages():
+            print(topic, t, len(msg.data))
+            if topic == image_topic:
+                cv_image = bridge.imgmsg_to_cv2(msg,"bgr8")
+                image_name = "%f" % msg.header.stamp.to_sec() + ".jpg"
+                cv2.imwrite(file_path,cv_image)
+
+            if topic == point_topic:
+                data = pc2.read_points(msg)
+                points = np.array(list(data),dtype=np.float32)
+                df = pd.DataFrame(points)
+                df.dropna(axis=0,how='any',inplace=True)
+                points = np.array(df)
+                
+                pcd_name = "lidar_data_%d" % msg.header.seq + ".pcd"
+                file_path = os.path.join(pcd_path,pcd_name)
+                header = [      ] 
+                with open(file_path，'a') as f:
+                    f.writelines(header)
+                    for line in points:
+                        f.writelines("{0} {1} {2} {3}\n".format(str(line[0]),str(line[1]),str(line[2]),str(int(line[3]))))
+                        
+          
