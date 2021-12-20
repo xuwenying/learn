@@ -21,4 +21,6 @@
     查看话题信息 rostopic list
     查看某个topic发布的信息  rostopic echo /turtle1/cmd_vel
     查看topic消息类型 rostopic type /turtle1/cmd_vel
+    查看topic消息发送频率 rostopic hz /turtle1/cmd_vel
+    查看topic消息带宽   rostopic bw /turtle1/cmd_vel
     发布某个topic消息 rostopic pub /turtle1/cmd_vel -r 1 消息
