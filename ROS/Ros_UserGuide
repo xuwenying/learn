@@ -13,5 +13,11 @@
 4、roscore是你在运行所有ROS程序前首先要运行的命令
   $ roscore
   
-5、使用rosrun，打开一个新终端:
+5、使用rosrun，执行package可执行文件，打开一个新终端:
   $ rosrun turtlesim turtlesim_node
+
+
+6、 查看节点信息 rosnode list
+    查看话题信息 rostopic list
+    查看某个topic发布的信息  rostopic echo /turtle1/cmd_vel
+    查看rostopic type /turtle1/cmd_vel
