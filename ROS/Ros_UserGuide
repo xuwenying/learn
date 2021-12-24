@@ -18,9 +18,15 @@
 
 
 6、 查看节点信息 rosnode list
-    查看话题信息 rostopic list
+    查看话题信息 rostopic list -v
     查看某个topic发布的信息  rostopic echo /turtle1/cmd_vel
     查看topic消息类型 rostopic type /turtle1/cmd_vel
     查看topic消息发送频率 rostopic hz /turtle1/cmd_vel
     查看topic消息带宽   rostopic bw /turtle1/cmd_vel
     发布某个topic消息 rostopic pub /turtle1/cmd_vel -r 1 消息
+
+
+7、录制和播放bag数据包：
+     查看bag包信息 rosbag inf bag包
+     录制  rosbag record  topic_name  
+     播放  rosbag play bag包        -r 频率  -l 循环播放
