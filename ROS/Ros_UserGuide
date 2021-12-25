@@ -26,7 +26,7 @@
     发布某个topic消息 rostopic pub /turtle1/cmd_vel -r 1 消息
 
 
-7、录制和播放bag数据包：
-     查看bag包信息 rosbag inf bag包
+7、录制和播放bag数据包：o
+     查看bag包信息 rosbag info bag包
      录制  rosbag record  topic_name  
      播放  rosbag play bag包        -r 频率  -l 循环播放
