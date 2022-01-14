@@ -1,0 +1,95 @@
+重装Uubuntu18.04系统后，连接网络 安装如下
+1、安装网络工具包：
+	sudo apt-get install net-tools
+2、ros install
+	sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+	sudo apt install curl
+        curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+	查看DNS域名ip  raw.githubusercontent.com
+	sudo gedit /etc/hosts
+        sudo apt update
+        sudo apt install ros-melodic-desktop-full
+        echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+        source ~/.bashrc
+        sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+
+3、protobuf2.6.1 install
+	tar -zxvf  protobuf2.6.1.tar.gz
+    $ ./configure
+    $ make
+    $ make check
+    $ sudo make install
+    $ sudo ldcofig
+
+4、glog  install     sudo apt-get install libgoogle-glog-dev
+   spnav install     sudo apt-get install libspnav-dev
+   adolc  install  sudo apt-get install libadolc-dev
+
+5、#Install qpOASES
+    wget https://github.com/startcode/qp-oases/archive/v3.2.1-1.tar.gz
+	unzip qpOASES-3.2.1.zip
+	pushd qpOASES-3.2.1
+	mkdir bin
+	make -j8 CPPFLAGS="-Wall -pedantic -Wshadow -Wfloat-equal -O3 -Wconversion -Wsign-	conversion -fPIC -DLINUX -DSOLVER_NONE -D__NO_COPYRIGHT__"
+	sudo cp bin/libqpOASES.so /usr/local/lib
+	sudo cp -r include/* /usr/local/include
+
+
+6、Ipopt install:
+	sudo apt-get install -y libblas-dev liblapack-dev gfortran
+	wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.8.zip
+	unzip Ipopt-3.12.8.zip
+	pushd Ipopt-3.12.8/ThirdParty/Mumps
+	bash get.Mumps
+	popd
+	pushd Ipopt-3.12.8/ThirdParty/ASL
+	bash get.ASL
+	popd
+	pushd Ipopt-3.12.8
+	./configure
+	make all
+	make install
+	sudo cp -r include/coin/* /usr/local/include/ipopt/ 
+	sudo cp -r lib/* /usr/local/lib/
+	popd
+
+7、eigen3 install 
+
+  sudo apt-get install libeigen3-dev 
+  sudo cp -r /usr/include/eigen3/Eigen /usr/local/include
+
+
+8、install ros joy
+  sudo apt install ros-melodic-joy*
+  sudo apt install ros-melodic-pacmod*
+
+9、install cuda CUDNN
+	chmod +x cuda_11.1.1_455.32.00_linux.run 
+	sudo ./cuda_11.1.1_455.32.00_linux.run
+	把驱动安装选项勾除掉，其他步骤继续安装就好
+	解压cudnn  tar -xzvf cudnn-11.2-linux-x64-v8.1.1.33.tgz
+	suco cp cuda/include/* /usr/local/cuda/include/
+	suco cp cuda/lib64/* /usr/local/cuda/lib64/
+	
+	添加环境变量和库：
+	export PATH=&PATH:/usr/local/cuda/bin
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+	source ~/.bashrc
+	
+10、install tensorRT 直接解压tensorRT安装包
+	tar -xzvf  TensorRT-7.2.3.4.Ubuntu-18.04.x86_64-gnu.cuda-11.1.cudnn8.1.tar.gz
+	添加环境变量：
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64：/home/xxxxxx/TensorRT-7.2.3.4/lib
+	
+	
+11、搭建VTD仿真软件：
+	修改网卡名称 sudo gedit /etc/default/grub   GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+				 sudo update-grub 
+	安装以来环境：sudo apt-get update
+				  sudo apt-get install xterm freeglut3 openssh-server nfs-common mesa-utils xfonts-75dpi libusb-0.1-4 python mesa-common-dev
+				  sudo apt-get install lsb
+
+
+
+
