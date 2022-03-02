@@ -1,1 +1,3 @@
 sudo mount -t cifs -o username="wenying.xu", password=" ",uid=1000,gid=1000 //10.179.2.20/xxx/xxx/    /disk2/xwy/20/ 
+ubuntu挂载文件系统 sudo sshfs usrname@ip:/home/xwy/....   /mnt
+ubuntu卸载文件系统 sudo fusermount /mnt
