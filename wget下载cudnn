@@ -1,0 +1,2 @@
+linux下载高版本cudnn可以用下面的网址绕过授权检查：
+wget http://developer.download.nvidia.com/compute/redist/cudnn/v8.2.4/cudnn-11.4-linux-x64-v8.2.4.15.tgz
