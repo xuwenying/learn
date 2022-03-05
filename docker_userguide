@@ -19,6 +19,11 @@ sudo docker exec -it  plat_qualcomm  /bin/bash  #启动当前名为plat_qualcomm
 sudo docker commit plat_qualcomm  xwy_qual:run  #提交当前名为plat_qualcomm的容器为xwy_qual的镜像
 
 
+docker用户添加权限：
+sudo usermod -aG docker xwy
+sudo service docker restart
+sudo skill -kill -u xwy
+
 docker 出现/var/run/docker.sock: permission denied 
 解决办法： chmod a+rw /var/run/docker.sock
 
