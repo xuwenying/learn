@@ -4,6 +4,8 @@ docker常用命令使用指南
 镜像：Ubuntu 
 映射关系：/home/xwy/develop/qualcomm_work/:/home/plat_qualcomm   #本地实际目录：docker目录
 
+error:出现 --gpus all 找不到device 可以安装 apt-get install nvidia-container-runtime
+
 sudo docker images                  #docker镜像列表
 
 sudo docker ps -a                   #docker进程列表
