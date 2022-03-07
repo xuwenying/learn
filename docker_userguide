@@ -20,6 +20,10 @@ sudo docker exec -it  plat_qualcomm  /bin/bash  #启动当前名为plat_qualcomm
 
 sudo docker commit plat_qualcomm  xwy_qual:run  #提交当前名为plat_qualcomm的容器为xwy_qual的镜像
 
+sudo docker save  -o xxx.tar  imagexxx # 当前路径下会生成一个xxx.tar
+
+docker  load  <  xxx.tar     # 生成的镜像跟之前打包的镜像名称一样
+
 
 docker用户添加权限：
 sudo usermod -aG docker xwy
