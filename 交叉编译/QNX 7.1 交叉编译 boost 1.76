@@ -1,0 +1,36 @@
+1、配置 QNX 编译环境
+    假如 QNX 7.1 SDP 的路径为 /work/sdk/qnx710，使用 source 命令让 qnx 环境变量生效：
+        source /work/sdk/qnx710/qnxsdp-env.sh
+    将 qcc 添加到 $PATH 环境变量：
+        export PATH=$PATH:/work/sdk/qnx710/host/linux/x86_64/usr/bin
+        
+2、下载 boost 1.76
+    https://www.boost.org/
+    从右侧 Download 标签页进入 ，在 OLD BOOST RELEASES 下点击 version history 选择 VERSION 1.76.0 的 Download 链接。
+    在下载页面选择合适的压缩包进行下载：boost_1_76_0.tar.gz
+    
+3、解压缩 boost 1.76
+    mkdir xwy_boost
+    tar -xvzf boost_1_76_0.tar.gz -C /xwy_boost
+    
+4、修改 qcc.jam
+    解压缩 boost_1_76_0.tar.gz 后，修改 boost_1_76_0/tools/build/src/tools/qcc.jam 文件第 41 行，将 QCC 修改成 qcc：
+    原文：
+        local command = [ common.get-invocation-command qcc : QCC : $(command) ] ;
+    修改为：
+        local command = [ common.get-invocation-command qcc : qcc : $(command) ] ;
+        
+ 5、编译 boost
+    执行 bootstrap.sh 生成构建系统：
+        ./bootstrap.sh
+        mkdir build
+    执行 b2 生成 boost 库，利用 --prefix=<path> 参数指定生成的 boost 路径，需要确保 <path> 路径存在，
+    比如在以下示例中指定了 --prefix=build，最终的目标会在 build文件夹下生成 ：
+    ./b2 install toolset=qcc target-os=qnxnto threadapi=pthread link=shared -l240 \
+        --layout=system --without-python --without-mpi --without-graph_parallel \
+        cxxflags="-Vgcc/8.3.0,gcc_ntoaarch64le -Y_cxx -Wc,-std=gnu++14 -D_LITTLE_ENDIAN" \
+        linkflags="-Vgcc/8.3.0,gcc_ntoaarch64le -Y_cxx -lang-c++" \
+        -j4 \
+        --prefix=build
+
+ 
