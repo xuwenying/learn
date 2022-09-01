@@ -1,0 +1,8 @@
+Ros远程节点收发消息
+主机ip:10.192.34.31,服务器ip:10.192.0.179
+主机端：export ROS_MASTER_URI=http://10.192.0.179:11311
+        export ROS_IP=10.192.34.31
+        启动程序 ./script/simulation.sh
+        
+ 服务器端：export ROS_IP=10.192.0.179
+          启动程序 ./script/rviz 查看节点消息
