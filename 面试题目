@@ -61,4 +61,34 @@
 第一天买进，最后一天卖出最优。中间的当天买进当天卖出不影响最终结果。最大收益为4。
 
 
+#include<bits/stdc++.h>
+ using namespace std;
+
+int getMax(vector<int>& prices){
+    int m = prices.size();
+    int dp[m][2];
+    dp[0][0] = 0, dp[0][1] = -prices[0];
+    for(int i = 1; i < m; ++i){
+        // 卖出
+        dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+        // 买入
+        dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+    }
+    return dp[m - 1][0];
+
+}
+ int main(){
+    vector<int> v = {8, 9, 2, 5, 4, 7, 1};
+    vector<int> v2 = {5, 4, 3, 2, 1};
+    vector<int> v3 = {1, 2, 3, 4, 5};
+
+    int ans = getMax(v);
+    int ans2 = getMax(v2);
+    int ans3 = getMax(v3);
+
+
+    cout << ans << " " << ans2 << " " << ans3 <<endl;
+ }
+
+
 
