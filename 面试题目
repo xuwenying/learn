@@ -1,6 +1,58 @@
-一、输入一个数，将其逆序后输出，例如输入536789，输出987635
+一、输入一个数，将其逆序后输出，例如输入536789.3245，输出5423.987635
+
+#include <bits/stdc++.h>
+using namespace std;
+
+double cal(double t){
+    vector<int>v;
+    vector<int>s;
+    int t1 = int(t);
+    t -= t1;
+
+    do{
+        v.push_back(t1%10);
+        t1 /= 10;
+    }while(t1);
+    double res = 0;
+    int i=v.size()-1;
+    while(i>=0){
+        res *= 0.1;
+        res += v[i];
+        i--;
+    }
+    res *= 0.1;
 
 
+    while(t < 1)    t *= 10;
+    while(t - int(t) >= 0.0000001){
+        t *= 10;
+    }
+    int k = int(t);
+    do{
+        s.push_back(k%10);
+        k /= 10;
+    }while(k);
+    double res1 = 0;
+    i=0;
+    while(i<s.size()){
+        res1 *= 10;
+        res1 += s[i];
+        i++;
+    }
+    double e = res+res1;
+    cout<<res+res1<<endl;
+    cout<<e<<endl;
+    return e;
+}
+
+int main( )
+{
+    vector<double>v={3784.43784}; //654.567
+    for (int i = 0; i < v.size(); ++i) {
+        cout<<cal(v[i])<<endl;
+    }
+    return 0;
+}
 
 
 二、在不使用第三个参数的情况下，交换两个变量的值；
