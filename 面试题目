@@ -1,5 +1,52 @@
 一、输入一个数，将其逆序后输出，例如输入536789.3245，输出5423.987635
 
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int my_reverse(int num) {
+    int res = 0;
+    while (num) {
+        res *= 10;
+        res += num % 10;
+        num /= 10;
+    }
+    return res;
+}
+
+int main() {
+    double num;
+    cin >> num;
+    int a = num;
+    double b = num - a;
+    int c;
+    int x; //表示小数点后的位数
+    if (abs(b) < 1e-5) {
+        cout << my_reverse(a) << endl;
+        return 0;
+    }
+    while (1) {
+        b *= 10;
+        x++;
+        if (abs(b - (int) b) < 1e-5) {
+            c = (int) b;
+            break;
+        }
+        if (abs(b - (int) b - 1) < 1e-5) {
+            c = (int) b + 1;
+            break;
+        }
+    }
+    cout.setf(ios::left);
+    cout.fill('0');
+    cout.width(x);
+    cout << my_reverse(c);
+    cout << "." << my_reverse(a) << endl;
+    return 0;
+}
+
+
 #include <bits/stdc++.h>
 using namespace std;
 
