@@ -2,5 +2,5 @@
 2、添加共享目录及主机ip sudo vim /etc/exports 
   [共享目录] [主机ip (参数)]
   如 /home/xuwenying/workspace 10.192.102.*(rw,sync,no_root_squash,no_subtree_check) 
-  
+3、重启服务：sudo service nfs-kernel-server restart  
 3、挂载 fs-nfs3 10.192.102.26:/home/xuwenyinng/workspace/ /data/
