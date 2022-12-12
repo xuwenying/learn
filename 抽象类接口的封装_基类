@@ -1,0 +1,98 @@
+使用纯虚函数和继承思想，隐藏成员变量及对接口进行封装
+ 
+ base_class_inter.h 如下：
+ #include in_data_type.h
+ 
+ namespace learning{
+ class BaseClassInter{
+ public:
+    virtual ~BaseClassInter() = default;
+    
+    virtual int32_t Init(const std::string &config_path) = 0;
+    
+    virtual int32_t Run() = 0;
+    
+    virtual int32_t Release() = 0;
+    
+    virtual void GetVersion(std::string &version) = 0;
+    
+    static BaseClassInter *GetBaseClassImpl() = 0;
+ };
+ }
+ 
+ base_class_inter.cc如下：
+ #include bse_class_inter.h
+ #include base_class_impl.h
+  
+ namespace learning{
+    BaseClassInter *BaseClassInter::GetBaseClassImpl()
+    {
+        return new BaseClassImpl();
+    }
+ }
+ 
+ 
+ 接口封装类头文件如下
+ base_class_impl.h 如下：
+ #include in_data_type.h
+ #include alg_handle.h
+ #include base_class_inter.h
+ 
+ 
+ namespace learning{
+ class BaseClassImpl : public BaseClassInter{
+ public:
+    virtual ~BaseClassImpl() =  default;
+    
+    int32_t Init(const std::string &config_path) override;
+    
+    int32_t Run()  override;
+    
+    int32_t Release()  override;
+    
+    void GetVersion(std::string &version)  override;
+    
+    Alg::Handle handle;
+ };
+ }
+ 
+ 
+  base_class_impl.cc如下：
+ #include base_class_impl.h
+  
+ namespace learning{
+ 
+ 
+    int32_t BaseClassImpl::Init(const std::string &config_path)
+    {
+        handle.Init(config_pathconfig_path);
+        return 1;
+    }
+    
+    int32_t BaseClassImpl::Run(const std::string &config_path)
+    {
+        handle.Run_inference();
+        return 1;
+    }
+    
+    int32_t BaseClassImpl::Run(const std::string &config_path)
+    {
+        return 1;
+    }
+    
+     void BaseClassImpl::GetVersion(std::string &version)
+     {
+        return;
+     }
+    
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
