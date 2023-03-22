@@ -1,0 +1,38 @@
+TNN：由腾讯优图实验室开源的高性能、轻量级神经网络推理框架，同时拥有跨平台、高性能、模型压缩、代码裁剪等众多突出优势。
+TNN框架在原有Rapidnet、ncnn框架的基础上进一步加强了移动端设备的支持以及性能优化，同时借鉴了业界主流开源框架高性能和良好拓展性的特性，拓展了对于后台X86, NV GPU的支持。
+手机端 TNN已经在手机QQ、微视、P图等众多应用中落地，服务端TNN作为腾讯云AI基础加速框架已为众多业务落地提供加速支持。
+
+1、下载TNN 源码工程包：https://github.com/Tencent/TNN/blob/master/README_CH.md
+
+2、 编译步骤
+  1）切换到脚本目录
+  cd <path_to_tnn>/scripts
+  
+  2）编辑build_aarch_linux.sh 或 build_armhf_linux.sh 修改配置选项
+  
+   SHARED_LIB="ON"                # ON表示编译动态库，OFF表示编译静态库
+   ARM="ON"                       # ON表示编译带有Arm CPU版本的库
+   OPENMP="ON"                    # ON表示打开OpenMP
+   OPENCL="OFF"                   # ON表示编译带有Arm GPU版本的库
+   RKNPU="OFF"                    # ON表示编译带有RKNPU版本的库
+   #ARM64:
+   CC=aarch64-linux-gnu-gcc       # 指定C编译器  qnx  aarch64-unknown-nto-qnx7.1.0-gcc
+   CXX=aarch64-linux-gnu-g++      # 指定C++编译器     aarch64-unknown-nto-qnx7.1.0-g++
+   TARGET_ARCH=aarch64            # 指定指令架构
+   #ARM32HF:
+   CC=arm-linux-gnueabihf-gcc       
+   CXX=arm-linux-gnueabihf-g++      
+   TARGET_ARCH=arm
+   
+  3）执行编译脚本
+
+  ./build_aarch_linux.sh
+
+3、修改Cmakelist.txt  
+  关于 cannot find -lld
+       cannot find -lrt
+  大概在400多行
+  添加一行 target_link_libraries(TNN /root/qnx710_4.2/target/qnx7/aarch64le/usr/lib/ldqnx-64.so.2)
+  
+4、最后生成 libTNN.so
+  
