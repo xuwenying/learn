@@ -24,6 +24,8 @@ sudo docker save  -o xxx.tar  imagexxx # 当前路径下会生成一个xxx.tar
 
 docker  load  <  xxx.tar     # 生成的镜像跟之前打包的镜像名称一样
 
+容器存成镜像文件： docker export -o images.tar idxxxx
+文件导入镜像：   docker import images.tar 镜像名:tag
 
 docker用户添加权限：
 sudo usermod -aG docker xwy
