@@ -20,3 +20,87 @@ APP_PLATFORM := android-24
 APP_CPPFLAGS += -std=c++11 -O3 -DQNN_API="__attribute__((visibility(\"default\")))"
 APP_LDFLAGS  += -nodefaultlibs -lc -lm -ldl -lgcc
 
+
+Android.mk
+
+# ==============================================================================
+#
+#  Author: xuwenying.
+#  All Rights Reserved.
+#  Confidential and Proprietary
+#
+# ===============================================================
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libQnnInferEngien 
+ifneq ($(filter $(NDK_KNOWN_DEVICE_ABI64S),$(TARGET_ARCH_ABI)),)
+# 64-bit ABIs
+ANDROID_ABI:= arm64-v8a
+else
+# 32-bit ABIs
+ANDROID_ABI:= armeabi-v7a
+endif
+LOCAL_SRC_FILES := $(LOCAL_PATH)/qnn_infer_lib/libs/${ANDROID_ABI}/libQnnInferEngien.so
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/qnn_infer_lib/inc
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libYaml
+ifneq ($(filter $(NDK_KNOWN_DEVICE_ABI64S),$(TARGET_ARCH_ABI)),)
+# 64-bit ABIs
+ANDROID_ABI:= arm64-v8a
+else
+# 32-bit ABIs
+ANDROID_ABI:= armeabi-v7a
+endif
+LOCAL_SRC_FILES := $(LOCAL_PATH)/third_party/yaml_and/libs/${ANDROID_ABI}/libYaml.so
+LOCAL_EXPORT_C_INCLUDES += $(LOCAL_PATH)/third_party/yaml_and/include
+include $(PREBUILT_SHARED_LIBRARY)
+
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/interface
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/include
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/libs
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/libs/interface
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/libs/preprocess/image_preprocess
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/libs/preprocess/input_check
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/libs/nn_inference
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/libs/parsing
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common/ConfigReader
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common/fastcv
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common/KalmanFilter
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common/Matrix
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common/coordinate_transform
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common/MunkresAssignment
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/camera/common/ConfigReader
+
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/third_party/
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/third_party/yaml_and/include
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/third_party/fastcv_qnx/inc
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/third_party/
+PACKAGE_C_INCLUDES += -I $(LOCAL_PATH)/base
+
+include $(CLEAR_VARS)
+LOCAL_CPP_FEATURES  += exceptions
+LOCAL_C_INCLUDES               := $(PACKAGE_C_INCLUDES)
+LOCAL_SHARED_LIBRARIES 		     := libQnnInferEngien 
+LOCAL_SHARED_LIBRARIES 		     += libYaml
+LOCAL_MODULE                   := lp_camera_demo
+# LOCAL_SRC_FILES                := main_android.cpp
+LOCAL_SRC_FILES                := $(LOCAL_PATH)/sample/8295/Camera8295Proj.cpp
+LOCAL_SRC_FILES                += $(LOCAL_PATH)/camera/app/camera_perception_handle.cpp
+LOCAL_SRC_FILES                += $(LOCAL_PATH)/camera/app/vision_impl.cc
+LOCAL_SRC_FILES                += $(LOCAL_PATH)/camera/app/vision_inter.cc
+LOCAL_SRC_FILES                += $(wildcard $(LOCAL_PATH)/camera/libs/nn_inference/*.cc)
+LOCAL_SRC_FILES                += $(wildcard $(LOCAL_PATH)/camera/libs/nn_inference/postprocess/*.cc)
+LOCAL_SRC_FILES                += $(wildcard $(LOCAL_PATH)/camera/libs/preprocess/image_preprocess/*.cc)
+LOCAL_SRC_FILES                += $(wildcard $(LOCAL_PATH)/camera/libs/preprocess/input_check/*.cpp)
+LOCAL_SRC_FILES                += $(wildcard $(LOCAL_PATH)/camera/libs/parsing/*.cpp)
+LOCAL_SRC_FILES                += $(wildcard $(LOCAL_PATH)/camera/common/ConfigReader/*.cpp)
+# LOCAL_SRC_FILES                += $(wildcard $(LOCAL_PATH)/third_party/yaml_and/src/*.cpp)
+
+
+LOCAL_LDLIBS                   := -lGLESv2 -lEGL
+#APP_ALLOW_MISSING_DEPS          = true
+include $(BUILD_EXECUTABLE)
